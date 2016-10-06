@@ -31,7 +31,7 @@ install ringojs
 install narwhal
 
 # Install more recent versions of some macOS tools.
-install vim --override-system-vi
+install vim --with-override-system-vi
 install homebrew/dupes/grep
 install homebrew/dupes/openssh
 
@@ -88,6 +88,14 @@ install tree
 install vbindiff
 install webkit2png
 install zopfli
+
+
+# install Cask and all the new packages that comes with it
+tap caskroom/cask
+
+cask google-chrome
+
+
 
 # Remove outdated versions from the cellar.
 cleanup
