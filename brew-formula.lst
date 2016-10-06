@@ -91,6 +91,7 @@ install zopfli
 
 # Emacs suff
 install cask
+install tmux
 
 # install Cask and all the new packages that comes with it for Mac App installs
 tap caskroom/cask
