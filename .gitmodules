@@ -1,0 +1,3 @@
+[submodule ".emacs"]
+	path = .emacs.d
+	url = git@github.com:kiddouk/emacs-configuration.git
