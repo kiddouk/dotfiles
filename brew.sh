@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Install command-line tools using Homebrew.
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [ ! -e /usr/local/bin/brew ]; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 
 # Install each tap and packages
 cat ${HOME}/.dotfiles/brew-formula.lst | grep "^[^#]" | xargs -L1 brew
