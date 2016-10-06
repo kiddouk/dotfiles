@@ -93,9 +93,8 @@ install zopfli
 # install Cask and all the new packages that comes with it
 tap caskroom/cask
 
-cask google-chrome
-
-
+cask install google-chrome
+cask install slack
 
 # Remove outdated versions from the cellar.
 cleanup
