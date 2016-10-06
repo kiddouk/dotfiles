@@ -89,8 +89,10 @@ install vbindiff
 install webkit2png
 install zopfli
 
+# Emacs suff
+install cask
 
-# install Cask and all the new packages that comes with it
+# install Cask and all the new packages that comes with it for Mac App installs
 tap caskroom/cask
 
 cask install google-chrome
