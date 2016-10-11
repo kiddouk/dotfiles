@@ -90,14 +90,28 @@ install webkit2png
 install zopfli
 
 # Emacs suff
+install --with-cocoa --srgb emacs
+linkapps emacs
 install cask
+
+# terminal stuff
 install tmux
+install htop
 
 # install Cask and all the new packages that comes with it for Mac App installs
 tap caskroom/cask
 
 cask install google-chrome
 cask install slack
+cask install intel-haxm
+
+# Install docker on my mac
+cask install virtualbox
+install docker-machine
+
+# development needs
+tap homebrew/science
+install opencv3
 
 # Remove outdated versions from the cellar.
 cleanup
