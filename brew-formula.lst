@@ -112,6 +112,8 @@ install docker-machine
 # development needs
 tap homebrew/science
 install opencv3
+install android-sdk
+install android-ndk
 
 # Remove outdated versions from the cellar.
 cleanup
