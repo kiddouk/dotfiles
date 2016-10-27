@@ -87,6 +87,7 @@ export LC_CTYPE=en_US.UTF-8
 
 ## Private exports
 export PASSWORD_STORE_KEY=sebastien.requiem@gmail.com
+export ANDROID_HOME=/usr/local/opt/android-sdk
 
 ## define private functions
 git() { echo $1 | grep "pu\(sh\|ll\)" >/dev/null && cd `/usr/local/bin/git rev-parse --show-toplevel` && test -f ./git/pre-push && ./git/pre-push && cd - >/dev/null && /usr/local/bin/git $@ || /usr/local/bin/git $@ }
