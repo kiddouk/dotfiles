@@ -115,5 +115,7 @@ install opencv3
 install android-sdk
 install android-ndk
 
+tap caskroom/fonts 
+cask install font-source-code-pro
 # Remove outdated versions from the cellar.
 cleanup
