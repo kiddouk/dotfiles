@@ -109,6 +109,9 @@ cask install intel-haxm
 cask install virtualbox
 install docker-machine
 
+# Install a few tools
+cask install steam
+
 # development needs
 tap homebrew/science
 install opencv3
