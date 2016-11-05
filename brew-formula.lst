@@ -117,5 +117,6 @@ install android-ndk
 
 tap caskroom/fonts 
 cask install font-source-code-pro
+cask install font-roboto
 # Remove outdated versions from the cellar.
 cleanup
