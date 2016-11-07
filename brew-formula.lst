@@ -111,6 +111,8 @@ install docker-machine
 
 # Install a few tools
 cask install steam
+cask install utorrent
+cask install torbrowser
 
 # development needs
 tap homebrew/science
