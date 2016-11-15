@@ -97,6 +97,7 @@ install cask
 # terminal stuff
 install tmux
 install htop
+install gnupg2
 
 # install Cask and all the new packages that comes with it for Mac App installs
 tap caskroom/cask
@@ -104,6 +105,7 @@ tap caskroom/cask
 cask install google-chrome
 cask install slack
 cask install intel-haxm
+cask install keybase
 
 # Install docker on my mac
 cask install virtualbox
@@ -113,6 +115,7 @@ install docker-machine
 cask install steam
 cask install utorrent
 cask install torbrowser
+cask install sketch-toolbox
 
 # development needs
 tap homebrew/science
