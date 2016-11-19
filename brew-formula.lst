@@ -106,6 +106,7 @@ cask install google-chrome
 cask install slack
 cask install intel-haxm
 cask install keybase
+cask install unrarx
 
 # Install docker on my mac
 cask install virtualbox
