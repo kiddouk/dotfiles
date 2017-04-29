@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/Users/sebastien/.oh-my-zsh
+export ZSH=/Users/sebastien/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -43,13 +43,13 @@ ZSH_THEME="avit"
 HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=${HOME}/.zsh
+# ZSH_CUSTOM=${HOME}/.zsh
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew aws docker httpie tmux virtualenvwrapper)
+plugins=(git brew docker httpie emoji fastgit tmux)
 
 # User configuration
 
@@ -89,7 +89,15 @@ export LC_CTYPE=en_US.UTF-8
 export PASSWORD_STORE_KEY=sebastien.requiem@gmail.com
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
-## define private functions
-git() { echo $1 | grep "pu\(sh\|ll\)" >/dev/null && cd `/usr/local/bin/git rev-parse --show-toplevel` && test -f ./git/pre-push && ./git/pre-push && cd - >/dev/null && /usr/local/bin/git $@ || /usr/local/bin/git $@ }
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git 
+precmd() {
+    vcs_info
+}
+
+zstyle ':vcs_info:git*' formats "%{$fg[blue]%}%b%{$reset_color%}"
+setopt prompt_subst
+unset RPROMPT
+PROMPT='${vcs_info_msg_0_} $emoji[four_leaf_clover]  '
 
 source ~/.aliases
