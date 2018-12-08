@@ -64,7 +64,7 @@ install sqlmap
 install tcpflow
 install tcpreplay
 install tcptrace
-install ucspi-tcp # `tcpserver` etc.
+install ucspi-tcp
 install xpdf
 install xz
 
@@ -101,7 +101,7 @@ install htop
 install gnupg2
 
 # install Cask and all the new packages that comes with it for Mac App installs
-tap caskroom/cask
+tap homebrew/cask
 
 cask install google-chrome
 cask install slack
@@ -116,17 +116,16 @@ install docker-machine
 # Install a few tools
 cask install steam
 cask install utorrent
-cask install torbrowser
+cask install tor-browser
 cask install sketch-toolbox
 
 # development needs
-tap homebrew/science
-install opencv3
-install android-sdk
-install android-ndk
-
-tap caskroom/fonts 
+tap homebrew/cask-fonts
 cask install font-source-code-pro
-cask install font-roboto
+install opencv3
+
+cask install android-sdk
+cask install android-ndk
+
 # Remove outdated versions from the cellar.
 cleanup
