@@ -112,6 +112,7 @@ cask install unrarx
 # Install docker on my mac
 cask install virtualbox
 install docker-machine
+install kubectl
 
 # Install a few tools
 cask install steam
