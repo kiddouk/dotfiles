@@ -60,7 +60,28 @@ local function coderMode()
    setModeDisplay("coder")
 end
 
+
+--- music
+local function playPauseMpsYoutube()
+    --- we encode the payload properly
+    local command = hs.json.encode({command={"keypress", "space"}})
+    local exec = "echo '" .. command
+    exec = exec .. "'"
+
+    --- we retrieve which sock mpv has opened
+    local socket = hs.execute("ps a | grep mpv | grep -v grep | sed 's/.*input-ipc-server=\\(.*\\).*/\\1/'")
+    exec = exec .. " | socat - "
+    exec = exec .. socket
+
+    --- we execute the command and pray
+    local output, status, type, rc = hs.execute(exec)
+    hs.alert("Youtube play/pause")
+    end
+    
+    
 local hyper = {"cmd", "shift", "alt", "ctrl"}
+
+hs.hotkey.bind(hyper, "m", playPauseMpsYoutube)
 
 --- Mode
 hs.hotkey.bind(hyper, "c", coderMode)
@@ -79,3 +100,5 @@ end)
 
 -- Away from computer
 hs.hotkey.bind(hyper, "l", hs.caffeinate.lockScreen)
+
+
