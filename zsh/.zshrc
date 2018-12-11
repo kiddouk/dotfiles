@@ -49,7 +49,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew docker httpie emoji fastgit tmux)
+plugins=(zsh-autosuggestions git brew docker httpie fastgit tmux)
 
 # User configuration
 
@@ -84,20 +84,54 @@ export LC_CTYPE=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias k=kubectl
 
 ## Private exports
 export PASSWORD_STORE_KEY=sebastien.requiem@gmail.com
 export ANDROID_HOME=/usr/local/opt/android-sdk
-
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git 
 precmd() {
     vcs_info
 }
 
-zstyle ':vcs_info:git*' formats "%{$fg[blue]%}%b%{$reset_color%}"
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-untracked
+function +vi-git-st() {
+    local ahead behind
+    local -a gitstatus
+
+    # for git prior to 1.7
+    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    (( $ahead )) && gitstatus+=( "↑${ahead}" )
+
+    # for git prior to 1.7
+    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+    (( $behind )) && gitstatus+=( "↓${behind}" )
+
+    hook_com[misc]+=${(j:/:)gitstatus}
+}
+
+
++vi-git-untracked(){
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+        git status --porcelain | grep '??' &> /dev/null ; then
+        # This will show the marker if there are any untracked files in repo.
+        # If instead you want to show the marker only if there are untracked
+        # files in $PWD, use:
+        #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
+        hook_com[staged]+='T'
+    fi
+}
+
+zstyle ':vcs_info:*' stagedstr '☀︎ '
+zstyle ':vcs_info:*' unstagedstr '☼ '
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git*' formats "%{$fg[blue]%}%b%{$reset_color%} %u %c %m"
 setopt prompt_subst
 unset RPROMPT
-PROMPT='${vcs_info_msg_0_} $emoji[four_leaf_clover]  '
+PROMPT='${vcs_info_msg_0_} >'
 
 source ~/.aliases
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
