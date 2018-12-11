@@ -127,5 +127,9 @@ install android-ndk
 tap caskroom/fonts 
 cask install font-source-code-pro
 cask install font-roboto
+
+
+
+cask install hammerspoon
 # Remove outdated versions from the cellar.
 cleanup
