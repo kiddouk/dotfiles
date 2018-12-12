@@ -133,5 +133,7 @@ setopt prompt_subst
 unset RPROMPT
 PROMPT='${vcs_info_msg_0_} >'
 
+export GPG_TTY=$(tty)
+
 source ~/.aliases
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
