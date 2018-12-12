@@ -102,8 +102,45 @@ local function playPauseMpsYoutube()
     local output, status, type, rc = os.execute(exec)
     hs.alert("Youtube play/pause")
 end
+
+local function revealMpsYoutube()
+   local currentTmuxWindow = hs.execute("/usr/local/bin/tmux display-message -p -t home '#I'") 
+   hs.applescript([[tell application "iTerm"
+    create window with profile "Transparent"
+	tell current session of current window
+        write text "export DISABLE_AUTO_TITLE=true"
+        write text "echo -ne '\\e]2;mpsyt\\a'"
+		write text "tmux select-window -t home:1"
+		write text "tmux new-session -A -s home"
+	end tell
+end tell]])
+   
+   os.execute("sleep 1")
+   
+   local win = hs.window.focusedWindow()
+   local f = win:frame()
+   local screen = win:screen()
+   local max = screen:frame()
+
+   f.h = max.h
+   f.w = max.w / 3
+   f.y = 0
+   f.x = (max.w / 2) - (f.w / 2)
+
+   win:setFrame(f)
+
+   local wf=hs.window.filter
+   local wf_mpsyt = wf.new(false):setAppFilter('iTerm2',{allowTitles='mpsyt'})
+
+   wf_mpsyt:subscribe(wf.windowDestroyed, function()
+                            local out = hs.execute("/usr/local/bin/tmux select-window -t home:" .. currentTmuxWindow)
+   end)
+   
+   
+end
     
 hs.hotkey.bind(hyper, "m", playPauseMpsYoutube)
+hs.hotkey.bind(hyper, "y", revealMpsYoutube)
 
 --- Mode
 hs.hotkey.bind(hyper, "c", coderMode)
