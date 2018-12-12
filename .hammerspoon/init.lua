@@ -1,6 +1,9 @@
 
 local spaces = require('hs._asm.undocumented.spaces')
 
+hs.loadSpoon("ReloadConfiguration")
+spoon.ReloadConfiguration:start()
+
 -- get ids of spaces in same layout as mission control has them (hopefully)
 local getSpacesIdsTable = function()
   local spacesLayout = spaces.layout()
@@ -61,22 +64,23 @@ local function coderMode()
 end
 
 
+
 --- music
 local function playPauseMpsYoutube()
     --- we encode the payload properly
     local command = hs.json.encode({command={"keypress", "space"}})
-    local exec = "echo '" .. command
-    exec = exec .. "'"
+    local exec = 'echo \'' .. command
+    exec = exec .. '\''
 
     --- we retrieve which sock mpv has opened
-    local socket = hs.execute("ps a | grep mpv | grep -v grep | sed 's/.*input-ipc-server=\\(.*\\).*/\\1/'")
-    exec = exec .. " | socat - "
+    local socket = hs.execute("ps a | grep mpv | grep -v grep | head -1 | sed 's/.*input-ipc-server=\\(.*\\).*/\\1/' | tr -d '\n'")
+    exec = exec .. " | /usr/local/bin/socat - "
     exec = exec .. socket
 
     --- we execute the command and pray
-    local output, status, type, rc = hs.execute(exec)
+    local output, status, type, rc = os.execute(exec)
     hs.alert("Youtube play/pause")
-    end
+end
     
     
 local hyper = {"cmd", "shift", "alt", "ctrl"}
