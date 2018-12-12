@@ -1,8 +1,29 @@
 
-local spaces = require('hs._asm.undocumented.spaces')
+local spaces = require "hs._asm.undocumented.spaces"
+local grid = require "hs.grid"
 
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
+
+    
+local hyper = {"cmd", "shift", "alt", "ctrl"}
+
+
+grid.GRIDHEIGHT = 3
+grid.GRIDWIDTH = 6
+
+grid.MARGINX = 0
+grid.MARGINY = 0
+
+gridKeys = {
+  { 1,   2,   3,   4,   5,   6,   7 },
+  {"q", "w", "e", "r", "t", "y", "u"},
+  {"a", "s", "d", "f", "g", "h", "j"},
+  {"z", "x", "c", "v", "b", "n", "m"}
+}
+
+hs.hotkey.bind(hyper, "g", grid.show)
+
 
 -- get ids of spaces in same layout as mission control has them (hopefully)
 local getSpacesIdsTable = function()
@@ -82,9 +103,6 @@ local function playPauseMpsYoutube()
     hs.alert("Youtube play/pause")
 end
     
-    
-local hyper = {"cmd", "shift", "alt", "ctrl"}
-
 hs.hotkey.bind(hyper, "m", playPauseMpsYoutube)
 
 --- Mode
