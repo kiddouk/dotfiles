@@ -2,11 +2,14 @@
 local spaces = require "hs._asm.undocumented.spaces"
 local grid = require "hs.grid"
 
-hs.loadSpoon("ReloadConfiguration")
-spoon.ReloadConfiguration:start()
-
 hs.loadSpoon("SpoonInstall")
 Install=spoon.SpoonInstall
+
+Install:andUse("ReloadConfiguration",
+               { fn=function(spoon)
+                    spoon.ReloadConfiguration:start()
+end})
+
 
 
 local hyper = {"cmd", "shift", "alt", "ctrl"}
