@@ -5,7 +5,10 @@ local grid = require "hs.grid"
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
-    
+hs.loadSpoon("SpoonInstall")
+Install=spoon.SpoonInstall
+
+
 local hyper = {"cmd", "shift", "alt", "ctrl"}
 
 
@@ -16,10 +19,10 @@ grid.MARGINX = 0
 grid.MARGINY = 0
 
 gridKeys = {
-  { 1,   2,   3,   4,   5,   6,   7 },
-  {"q", "w", "e", "r", "t", "y", "u"},
-  {"a", "s", "d", "f", "g", "h", "j"},
-  {"z", "x", "c", "v", "b", "n", "m"}
+   { 1,   2,   3,   4,   5,   6,   7 },
+   {"q", "w", "e", "r", "t", "y", "u"},
+   {"a", "s", "d", "f", "g", "h", "j"},
+   {"z", "x", "c", "v", "b", "n", "m"}
 }
 
 hs.hotkey.bind(hyper, "g", grid.show)
@@ -27,28 +30,28 @@ hs.hotkey.bind(hyper, "g", grid.show)
 
 -- get ids of spaces in same layout as mission control has them (hopefully)
 local getSpacesIdsTable = function()
-  local spacesLayout = spaces.layout()
-  local spacesIds = {}
+   local spacesLayout = spaces.layout()
+   local spacesIds = {}
 
-  hs.fnutils.each(hs.screen.allScreens(), function(screen)
-    local spaceUUID = screen:spacesUUID()
+   hs.fnutils.each(hs.screen.allScreens(), function(screen)
+                      local spaceUUID = screen:spacesUUID()
 
-    local userSpaces = hs.fnutils.filter(spacesLayout[spaceUUID], function(spaceId)
-      return spaces.spaceType(spaceId) == spaces.types.user
-    end)
+                      local userSpaces = hs.fnutils.filter(spacesLayout[spaceUUID], function(spaceId)
+                                                              return spaces.spaceType(spaceId) == spaces.types.user
+                      end)
 
-    hs.fnutils.concat(spacesIds, userSpaces or {})
-  end)
+                      hs.fnutils.concat(spacesIds, userSpaces or {})
+   end)
 
-  return spacesIds
+   return spacesIds
 end
 
 
 local throwToSpace = function(win, spaceIdx)
-  local spacesIds = getSpacesIdsTable()
-  local spaceId = spacesIds[spaceIdx]
+   local spacesIds = getSpacesIdsTable()
+   local spaceId = spacesIds[spaceIdx]
 
-  spaces.moveWindowToSpace(win:id(), spaceId)
+   spaces.moveWindowToSpace(win:id(), spaceId)
 end
 
 status = hs.menubar.new()
@@ -87,20 +90,21 @@ end
 
 
 --- music
+
 local function playPauseMpsYoutube()
-    --- we encode the payload properly
-    local command = hs.json.encode({command={"keypress", "space"}})
-    local exec = 'echo \'' .. command
-    exec = exec .. '\''
+   --- we encode the payload properly
+   local command = hs.json.encode({command={"keypress", "space"}})
+   local exec = 'echo \'' .. command
+   exec = exec .. '\''
 
-    --- we retrieve which sock mpv has opened
-    local socket = hs.execute("ps a | grep mpv | grep -v grep | head -1 | sed 's/.*input-ipc-server=\\(.*\\).*/\\1/' | tr -d '\n'")
-    exec = exec .. " | /usr/local/bin/socat - "
-    exec = exec .. socket
+   --- we retrieve which sock mpv has opened
+   local socket = hs.execute("ps a | grep mpv | grep -v grep | head -1 | sed 's/.*input-ipc-server=\\(.*\\).*/\\1/' | tr -d '\n'")
+   exec = exec .. " | /usr/local/bin/socat - "
+   exec = exec .. socket
 
-    --- we execute the command and pray
-    local output, status, type, rc = os.execute(exec)
-    hs.alert("Youtube play/pause")
+   --- we execute the command and pray
+   local output, status, type, rc = os.execute(exec)
+   hs.alert("Youtube play/pause")
 end
 
 local function revealMpsYoutube()
@@ -133,14 +137,30 @@ end tell]])
    local wf_mpsyt = wf.new(false):setAppFilter('iTerm2',{allowTitles='mpsyt'})
 
    wf_mpsyt:subscribe(wf.windowDestroyed, function()
-                            local out = hs.execute("/usr/local/bin/tmux select-window -t home:" .. currentTmuxWindow)
+                         local out = hs.execute("/usr/local/bin/tmux select-window -t home:" .. currentTmuxWindow)
    end)
    
    
 end
-    
+
 hs.hotkey.bind(hyper, "m", playPauseMpsYoutube)
 hs.hotkey.bind(hyper, "y", revealMpsYoutube)
+
+--- Translation
+local wm=hs.webview.windowMasks
+Install:andUse("PopupTranslateSelection",
+               {
+                  disable = false,
+                  config = {
+                     popup_style = wm.utility|wm.HUD|wm.titled|wm.closable|wm.resizable,
+                  },
+                  hotkeys = {
+                     translate_to_da = { hyper, "d" },
+                     translate_to_en = { hyper, "e" }
+                  }
+               }
+)
+
 
 --- Mode
 hs.hotkey.bind(hyper, "c", coderMode)
@@ -148,7 +168,7 @@ hs.hotkey.bind(hyper, "c", coderMode)
 -- Application launcher
 hs.hotkey.bind(hyper, "f", function()
                   hs.application.launchOrFocus("Firefox")
-                  end )
+end )
 
 -- Application hints
 hs.hints.style = "vimperator"
