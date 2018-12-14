@@ -35,7 +35,6 @@ local watcher = hs.wifi.watcher.new(function(watcher, message, iface, rssi, rate
          return
       end
       local ssid = hs.wifi.currentNetwork(iface)
-      hs.alert(ssid)
       if ssid ~= "LaMaisonDesGeeks" then
          for _, audiodevice in pairs(hs.audiodevice.allOutputDevices()) do
             audiodevice:setVolume(0)
