@@ -7,7 +7,7 @@ Install=spoon.SpoonInstall
 
 Install:andUse("ReloadConfiguration",
                { fn=function(spoon)
-                    spoon.ReloadConfiguration:start()
+                    spoon:start()
 end})
 
 local hyper = {"cmd", "shift", "alt", "ctrl"}
